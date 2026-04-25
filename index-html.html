@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onside English — #WeSpeakFootball</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --green:#4ADE4A;--green-dim:#2fb82f;--green-glow:rgba(74,222,74,0.18);
+  --dark:#3D3D3D;--darker:#2a2a2a;--darkest:#1e1e1e;
+  --card:#444444;--card2:#4a4a4a;--text:#ffffff;--text-muted:#aaaaaa;
+  --border:rgba(74,222,74,0.2);
+  --font-head:'Barlow Condensed',sans-serif;--font-body:'Barlow',sans-serif;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--darker);color:var(--text);font-family:var(--font-body);min-height:100vh;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--darkest);}::-webkit-scrollbar-thumb{background:var(--green);}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(30,30,30,0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:10px;cursor:pointer;}
+.nav-logo-icon{width:36px;height:36px;background:var(--green);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:20px;}
+.nav-logo-text{font-family:var(--font-head);font-size:20px;font-weight:800;letter-spacing:1px;}
+.nav-logo-text span{color:var(--green);}
+.nav-links{display:flex;gap:4px;align-items:center;}
+.nav-links a{font-family:var(--font-head);font-size:14px;font-weight:600;letter-spacing:0.5px;color:var(--text-muted);text-decoration:none;padding:6px 12px;border-radius:4px;transition:all 0.2s;text-transform:uppercase;cursor:pointer;}
+.nav-links a:hover,.nav-links a.active{color:var(--green);}
+.nav-cta{background:var(--green)!important;color:var(--dark)!important;font-weight:700!important;}
+.nav-cta:hover{background:#5fef5f!important;}
+
+/* SECTIONS */
+.section{display:none;min-height:100vh;padding:80px 20px 60px;}
+.section.active{display:block;}
+.section-wrap{max-width:900px;margin:0 auto;}
+.section-header{margin-bottom:32px;}
+.section-header h2{font-family:var(--font-head);font-size:clamp(36px,7vw,64px);font-weight:900;text-transform:uppercase;letter-spacing:-0.5px;line-height:1;}
+.section-header h2 span{color:var(--green);}
+.section-header p{color:var(--text-muted);font-size:15px;margin-top:10px;max-width:520px;line-height:1.6;}
+
+/* HERO */
+#home{padding:0;}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 20px 40px;position:relative;overflow:hidden;}
+.hero-field{position:absolute;inset:0;opacity:0.04;background-image:linear-gradient(var(--green) 1px,transparent 1px),linear-gradient(90deg,var(--green) 1px,transparent 1px);background-size:60px 60px;}
+.hero-field::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:320px;height:320px;border:2px solid var(--green);border-radius:50%;opacity:0.12;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(74,222,74,0.1);border:1px solid var(--border);border-radius:20px;padding:6px 18px;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:24px;animation:fadeUp 0.5s ease both;}
+.hero h1{font-family:var(--font-head);font-size:clamp(56px,13vw,120px);font-weight:900;line-height:0.88;letter-spacing:-2px;text-transform:uppercase;margin-bottom:20px;animation:fadeUp 0.5s 0.1s ease both;}
+.hero h1 span{color:var(--green);display:block;}
+.hero-sub{font-size:clamp(15px,2.5vw,18px);color:var(--text-muted);max-width:460px;line-height:1.7;margin-bottom:36px;animation:fadeUp 0.5s 0.2s ease both;}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;animation:fadeUp 0.5s 0.3s ease both;}
+.btn-primary{background:var(--green);color:var(--dark);font-family:var(--font-head);font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:14px 32px;border:none;border-radius:4px;cursor:pointer;transition:all 0.2s;}
+.btn-primary:hover{background:#5fef5f;transform:translateY(-2px);}
+.btn-secondary{background:transparent;color:var(--text);font-family:var(--font-head);font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:14px 32px;border:2px solid rgba(255,255,255,0.2);border-radius:4px;cursor:pointer;transition:all 0.2s;}
+.btn-secondary:hover{border-color:var(--green);color:var(--green);}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-top:48px;width:100%;max-width:480px;animation:fadeUp 0.5s 0.4s ease both;}
+.hero-stat{background:var(--darkest);padding:20px 12px;text-align:center;}
+.hero-stat-val{font-family:var(--font-head);font-size:34px;font-weight:900;color:var(--green);line-height:1;}
+.hero-stat-label{font-size:11px;color:var(--text-muted);margin-top:4px;text-transform:uppercase;letter-spacing:0.5px;}
+
+/* PODCAST */
+.situation-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.sit-tab{font-family:var(--font-head);font-size:13px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;padding:7px 16px;border-radius:3px;border:1px solid rgba(255,255,255,0.12);background:transparent;color:var(--text-muted);cursor:pointer;transition:all 0.2s;}
+.sit-tab:hover,.sit-tab.active{background:var(--green);color:var(--dark);border-color:var(--green);}
+.episodes-grid{display:grid;gap:10px;}
+.episode-card{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:16px 20px;display:flex;align-items:center;gap:16px;transition:all 0.2s;cursor:pointer;}
+.episode-card:hover{border-color:var(--green);background:var(--card2);}
+.ep-num{font-family:var(--font-head);font-size:22px;font-weight:900;color:var(--green);min-width:36px;}
+.ep-info{flex:1;}
+.ep-title{font-family:var(--font-head);font-size:18px;font-weight:700;letter-spacing:0.3px;margin-bottom:4px;}
+.ep-meta{font-size:12px;color:var(--text-muted);display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+.ep-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:3px;text-transform:uppercase;letter-spacing:0.5px;}
+.ep-badge.free{background:rgba(74,222,74,0.15);color:var(--green);}
+.ep-badge.premium{background:rgba(255,180,0,0.15);color:#ffb400;}
+.ep-play{width:40px;height:40px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.2s;text-decoration:none;}
+.ep-play:hover{transform:scale(1.1);}
+.premium-banner{background:linear-gradient(135deg,rgba(74,222,74,0.08),rgba(74,222,74,0.03));border:1px solid var(--border);border-radius:8px;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:20px;flex-wrap:wrap;}
+.premium-banner-text h3{font-family:var(--font-head);font-size:22px;font-weight:800;text-transform:uppercase;margin-bottom:4px;}
+.premium-banner-text p{font-size:13px;color:var(--text-muted);}
+
+/* DICCIONARIO */
+.dict-search{width:100%;padding:12px 16px;background:var(--card);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:var(--text);font-family:var(--font-body);font-size:15px;outline:none;transition:border-color 0.2s;margin-bottom:12px;}
+.dict-search:focus{border-color:var(--green);}
+.dict-search::placeholder{color:var(--text-muted);}
+.alpha-wrap{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px;}
+.alpha-btn{font-family:var(--font-head);font-size:14px;font-weight:700;padding:4px 10px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:var(--text-muted);cursor:pointer;border-radius:3px;transition:all 0.15s;}
+.alpha-btn:hover,.alpha-btn.active{background:var(--green);color:var(--dark);border-color:var(--green);}
+.dict-stats{font-size:13px;color:var(--text-muted);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.dict-stats span{color:var(--text);font-weight:600;}
+.letter-group{margin-bottom:28px;}
+.letter-label{font-family:var(--font-head);font-size:48px;font-weight:900;color:var(--green);line-height:1;margin-bottom:12px;border-left:4px solid var(--green);padding-left:12px;}
+.dict-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;}
+.dict-card{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:6px;padding:14px 16px;transition:all 0.2s;}
+.dict-card:hover{border-color:var(--green);background:var(--card2);}
+.dict-en{font-family:var(--font-head);font-size:20px;font-weight:800;margin-bottom:2px;}
+.dict-es{font-size:12px;font-weight:600;color:var(--green);text-transform:uppercase;letter-spacing:0.3px;margin-bottom:8px;}
+.dict-def{font-size:13px;color:var(--text-muted);line-height:1.55;margin-bottom:8px;}
+.dict-example{font-size:12px;font-style:italic;color:#888;border-left:2px solid var(--green);padding:5px 10px;margin-bottom:8px;background:rgba(74,222,74,0.04);}
+.dict-example span{font-style:normal;font-size:10px;color:var(--green);font-weight:600;display:block;margin-bottom:2px;}
+.dict-bottom{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.dict-tag{font-size:10px;background:rgba(74,222,74,0.1);color:var(--green);padding:2px 8px;border-radius:10px;font-weight:600;}
+.var-pill{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;}
+.var-pill.BR{background:rgba(59,130,246,0.15);color:#60a5fa;}
+.var-pill.US{background:rgba(251,146,60,0.15);color:#fb923c;}
+.var-pill.BOTH{background:rgba(167,139,250,0.15);color:#a78bfa;}
+.no-results{text-align:center;padding:48px 0;color:var(--text-muted);display:none;}
+
+/* PLANES */
+.plans-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px;}
+.plan-card{background:var(--card);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:26px;}
+.plan-card.featured{border-color:var(--green);background:rgba(74,222,74,0.04);}
+.plan-name{font-family:var(--font-head);font-size:30px;font-weight:900;text-transform:uppercase;margin-bottom:6px;}
+.plan-price{font-family:var(--font-head);font-size:48px;font-weight:900;color:var(--green);line-height:1;margin-bottom:4px;}
+.plan-price span{font-size:16px;color:var(--text-muted);font-weight:400;}
+.plan-desc{font-size:13px;color:var(--text-muted);margin-bottom:18px;line-height:1.5;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.plan-features{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:22px;}
+.plan-features li{font-size:13px;color:var(--text-muted);display:flex;gap:8px;align-items:flex-start;line-height:1.4;}
+.plan-features li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:1px;}
+.plan-features li.no{color:#555;}
+.plan-features li.no::before{content:'✗';color:#555;}
+
+/* PAYMENT MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:200;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--dark);border:1px solid var(--border);border-radius:12px;padding:28px;max-width:460px;width:100%;position:relative;animation:fadeUp 0.3s ease;}
+.modal-close{position:absolute;top:16px;right:16px;background:transparent;border:none;color:var(--text-muted);font-size:22px;cursor:pointer;line-height:1;}
+.modal-close:hover{color:var(--text);}
+.modal h3{font-family:var(--font-head);font-size:28px;font-weight:900;text-transform:uppercase;margin-bottom:4px;}
+.modal h3 span{color:var(--green);}
+.modal-price{font-family:var(--font-head);font-size:42px;font-weight:900;color:var(--green);margin-bottom:6px;line-height:1;}
+.modal-price span{font-size:16px;color:var(--text-muted);font-weight:400;}
+.modal-sub{font-size:13px;color:var(--text-muted);margin-bottom:22px;line-height:1.5;}
+.modal-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-muted);margin-bottom:10px;}
+.payment-methods{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;}
+.pay-method{background:var(--darker);border:2px solid rgba(255,255,255,0.1);border-radius:6px;padding:12px;text-align:center;cursor:pointer;transition:all 0.2s;}
+.pay-method:hover,.pay-method.selected{border-color:var(--green);background:rgba(74,222,74,0.06);}
+.pay-method-name{font-family:var(--font-head);font-size:16px;font-weight:700;margin-bottom:2px;}
+.pay-method-detail{font-size:11px;color:var(--text-muted);}
+.pay-method.selected .pay-method-name{color:var(--green);}
+.modal-whatsapp{width:100%;padding:14px;background:#25D366;color:#fff;font-family:var(--font-head);font-size:17px;font-weight:800;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:10px;}
+.modal-whatsapp:hover{background:#20bd5a;transform:translateY(-1px);}
+.modal-whatsapp:disabled{background:#444;cursor:not-allowed;transform:none;}
+.modal-note{font-size:11px;color:var(--text-muted);text-align:center;margin-top:12px;line-height:1.5;}
+
+/* REGISTRO */
+.register-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+.register-form{background:var(--card);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:26px;}
+.form-group{margin-bottom:16px;}
+.form-group label{display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-muted);margin-bottom:7px;}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 14px;background:var(--darker);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;transition:border-color 0.2s;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--green);}
+.form-group select{appearance:none;cursor:pointer;}
+.form-group textarea{resize:vertical;min-height:80px;}
+.register-perks{display:flex;flex-direction:column;gap:14px;}
+.perk{display:flex;gap:14px;align-items:flex-start;}
+.perk-icon{width:42px;height:42px;background:rgba(74,222,74,0.1);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;}
+.perk-text h4{font-family:var(--font-head);font-size:16px;font-weight:700;margin-bottom:2px;}
+.perk-text p{font-size:13px;color:var(--text-muted);line-height:1.5;}
+.form-submit{width:100%;padding:14px;background:var(--green);color:var(--dark);font-family:var(--font-head);font-size:17px;font-weight:800;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:4px;cursor:pointer;transition:all 0.2s;margin-top:4px;}
+.form-submit:hover{background:#5fef5f;}
+.success-msg{display:none;background:rgba(74,222,74,0.08);border:1px solid var(--border);border-radius:8px;padding:20px;text-align:center;margin-top:14px;}
+.success-msg h3{font-family:var(--font-head);font-size:22px;font-weight:800;color:var(--green);margin-bottom:6px;}
+.success-msg p{font-size:13px;color:var(--text-muted);}
+
+/* CONTACTO */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+.contact-info{display:flex;flex-direction:column;gap:12px;}
+.contact-item{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:14px 16px;}
+.contact-icon{width:42px;height:42px;background:rgba(74,222,74,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.contact-item h4{font-family:var(--font-head);font-size:16px;font-weight:700;margin-bottom:2px;}
+.contact-item p,.contact-item a{font-size:13px;color:var(--text-muted);text-decoration:none;}
+.contact-item a:hover{color:var(--green);}
+
+/* MOBILE NAV */
+.mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(22,22,22,0.97);backdrop-filter:blur(12px);border-top:1px solid var(--border);z-index:100;padding:8px 0 env(safe-area-inset-bottom,8px);}
+.mobile-nav-inner{display:flex;justify-content:space-around;}
+.mob-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 10px;cursor:pointer;border:none;background:transparent;color:var(--text-muted);transition:color 0.2s;}
+.mob-btn.active,.mob-btn:hover{color:var(--green);}
+.mob-btn svg{width:22px;height:22px;}
+.mob-btn span{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+@media(max-width:700px){
+  .nav-links{display:none;}
+  .mobile-nav{display:block;}
+  .section{padding:76px 16px 80px;}
+  .register-grid,.contact-grid,.plans-grid{grid-template-columns:1fr;}
+  .dict-grid{grid-template-columns:1fr;}
+  .payment-methods{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="showSection('home',null)">
+    <div class="nav-logo-icon">⚽</div>
+    <div class="nav-logo-text">ONSIDE<span> ENGLISH</span></div>
+  </div>
+  <div class="nav-links">
+    <a class="active" onclick="showSection('home',this)">Home</a>
+    <a onclick="showSection('podcasts',this)">Podcast</a>
+    <a onclick="showSection('diccionario',this)">Diccionario</a>
+    <a onclick="showSection('planes',this)">Planes</a>
+    <a onclick="showSection('contacto',this)">Contacto</a>
+    <a class="nav-cta" onclick="showSection('registro',this)">Registrarse</a>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav">
+  <div class="mobile-nav-inner">
+    <button class="mob-btn active" onclick="showSection('home',this,true)">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+      <span>Home</span>
+    </button>
+    <button class="mob-btn" onclick="showSection('podcasts',this,true)">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+      <span>Podcast</span>
+    </button>
+    <button class="mob-btn" onclick="showSection('diccionario',this,true)">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+      <span>Dicc.</span>
+    </button>
+    <button class="mob-btn" onclick="showSection('planes',this,true)">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+      <span>Planes</span>
+    </button>
+    <button class="mob-btn" onclick="showSection('registro',this,true)">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+      <span>Unirse</span>
+    </button>
+  </div>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div class="modal-overlay" id="payModal" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal h3" style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;margin-bottom:4px;">Plan <span style="color:#4ADE4A">Premium ⚡</span></div>
+    <div class="modal-price">$15<span> USD/mes</span></div>
+    <div class="modal-sub">Acceso completo a todos los episodios, ejercicios y contenido nuevo cada semana. Cancelás cuando quieras.</div>
+    <div class="modal-label">Elegí tu método de pago</div>
+    <div class="payment-methods" id="paymentMethods">
+      <div class="pay-method" onclick="selectMethod(this,'PayPal')">
+        <div class="pay-method-name">PayPal</div>
+        <div class="pay-method-detail">Internacional</div>
+      </div>
+      <div class="pay-method" onclick="selectMethod(this,'Payoneer')">
+        <div class="pay-method-name">Payoneer</div>
+        <div class="pay-method-detail">Internacional</div>
+      </div>
+      <div class="pay-method" onclick="selectMethod(this,'Prex')">
+        <div class="pay-method-name">Prex</div>
+        <div class="pay-method-detail">Uruguay / Regional</div>
+      </div>
+      <div class="pay-method" onclick="selectMethod(this,'Mercado Pago')">
+        <div class="pay-method-name">Mercado Pago</div>
+        <div class="pay-method-detail">Argentina</div>
+      </div>
+      <div class="pay-method" onclick="selectMethod(this,'Transferencia bancaria')">
+        <div class="pay-method-name">Transferencia</div>
+        <div class="pay-method-detail">Argentina (ARS)</div>
+      </div>
+    </div>
+    <button class="modal-whatsapp" id="waBtn" onclick="sendWhatsApp()" disabled>
+      <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Elegí un método primero
+    </button>
+    <div class="modal-note">Te vamos a contactar por WhatsApp para confirmar el pago y darte acceso en menos de 24hs. ¿Dudas? <a href="mailto:englishonside@gmail.com" style="color:var(--green);">englishonside@gmail.com</a></div>
+  </div>
+</div>
+
+<!-- HOME -->
+<div id="home" class="section active">
+  <div class="hero">
+    <div class="hero-field"></div>
+    <div class="hero-tag">#WeSpeakFootball</div>
+    <h1>Play in <span>English.</span></h1>
+    <p class="hero-sub">El único método de inglés diseñado para futbolistas. Vocabulario real del vestuario, entrevistas, contratos y la vida del jugador profesional.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="showSection('registro',null)">Empezar gratis</button>
+      <button class="btn-secondary" onclick="showSection('podcasts',null)">Ver episodios</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-val">120+</div><div class="hero-stat-label">Términos</div></div>
+      <div class="hero-stat"><div class="hero-stat-val">6</div><div class="hero-stat-label">Situaciones</div></div>
+      <div class="hero-stat"><div class="hero-stat-val">100%</div><div class="hero-stat-label">Fútbol</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PODCASTS -->
+<div id="podcasts" class="section">
+  <div class="section-wrap">
+    <div class="section-header">
+      <h2>Episodios <span>& Cursos</span></h2>
+      <p>Contenido agrupado por situaciones reales del mundo del fútbol. Escuchá donde quieras.</p>
+    </div>
+    <div class="situation-tabs" id="sitTabs">
+      <button class="sit-tab active" onclick="filterEpisodes('todos',this)">Todos</button>
+      <button class="sit-tab" onclick="filterEpisodes('vestuario',this)">🧤 Vestuario</button>
+      <button class="sit-tab" onclick="filterEpisodes('entrevistas',this)">🎙 Entrevistas</button>
+      <button class="sit-tab" onclick="filterEpisodes('contratos',this)">📋 Contratos</button>
+      <button class="sit-tab" onclick="filterEpisodes('redes',this)">📱 Redes sociales</button>
+      <button class="sit-tab" onclick="filterEpisodes('viajes',this)">✈️ Viajes</button>
+      <button class="sit-tab" onclick="filterEpisodes('campo',this)">⚽ En el campo</button>
+    </div>
+    <div class="episodes-grid" id="episodesGrid"></div>
+    <div class="premium-banner">
+      <div class="premium-banner-text">
+        <h3>🔒 Desbloqueá todo el contenido</h3>
+        <p>Accedé a todos los episodios y cursos por solo $15 USD/mes.</p>
+      </div>
+      <button class="btn-primary" onclick="openModal()">Suscribirse ⚡</button>
+    </div>
+  </div>
+</div>
+
+<!-- DICCIONARIO -->
+<div id="diccionario" class="section">
+  <div class="section-wrap">
+    <div class="section-header">
+      <h2>Diccionario <span>Futbolero</span></h2>
+      <p>120+ términos del fútbol en inglés con traducción, definición y ejemplo en contexto.</p>
+    </div>
+    <input class="dict-search" type="text" id="dictSearch" placeholder="Buscar en inglés o español..." autocomplete="off">
+    <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;">
+      <button class="sit-tab active" onclick="setVar('ALL',this)">Todos</button>
+      <button class="sit-tab" onclick="setVar('BR',this)">🇬🇧 Brit</button>
+      <button class="sit-tab" onclick="setVar('US',this)">🇺🇸 American</button>
+    </div>
+    <div class="alpha-wrap" id="alphaWrap"><button class="alpha-btn active" onclick="setLetter('ALL',this)">TODAS</button></div>
+    <div class="dict-stats" id="dictStats"></div>
+    <div id="dictContainer"></div>
+    <div class="no-results" id="noResults"><p>No se encontraron términos.</p></div>
+  </div>
+</div>
+
+<!-- PLANES -->
+<div id="planes" class="section">
+  <div class="section-wrap">
+    <div class="section-header">
+      <h2>Elegí tu <span>Plan</span></h2>
+      <p>Acceso flexible. Sin contratos. Cancelás cuando quieras.</p>
+    </div>
+    <div class="plans-grid">
+      <div class="plan-card">
+        <div class="plan-name">Free</div>
+        <div class="plan-price">$0<span>/mes</span></div>
+        <div class="plan-desc">Para empezar a entrenar tu inglés sin compromiso.</div>
+        <ul class="plan-features">
+          <li>Diccionario completo (120+ términos)</li>
+          <li>2 episodios gratuitos por situación</li>
+          <li>Acceso a la comunidad básica</li>
+          <li class="no">Episodios y cursos completos</li>
+          <li class="no">Ejercicios y quizzes</li>
+          <li class="no">Guías descargables</li>
+          <li class="no">Nuevo contenido semanal</li>
+        </ul>
+        <button class="btn-secondary" style="width:100%;padding:13px;" onclick="showSection('registro',null)">Registrarse gratis</button>
+      </div>
+      <div class="plan-card featured">
+        <div class="plan-name" style="color:var(--green)">Premium ⚡</div>
+        <div class="plan-price">$15<span> USD/mes</span></div>
+        <div class="plan-desc">Acceso completo. Para el jugador que quiere llegar al siguiente nivel.</div>
+        <ul class="plan-features">
+          <li>Todo lo del plan Free</li>
+          <li>Todos los episodios sin límite</li>
+          <li>Cursos completos por situación</li>
+          <li>Ejercicios y quizzes interactivos</li>
+          <li>Guías descargables</li>
+          <li>Nuevo contenido cada semana</li>
+          <li>Prioridad para clases individuales</li>
+        </ul>
+        <button class="btn-primary" style="width:100%;padding:13px;" onclick="openModal()">Suscribirse ahora ⚡</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REGISTRO -->
+<div id="registro" class="section">
+  <div class="section-wrap">
+    <div class="section-header">
+      <h2>Crear <span>Perfil</span></h2>
+      <p>Gratis. Sin tarjeta de crédito. Accedé al contenido básico de inmediato.</p>
+    </div>
+    <div class="register-grid">
+      <div class="register-form">
+        <div class="form-group"><label>Nombre completo</label><input type="text" id="reg-name" placeholder="Tu nombre"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="reg-email" placeholder="tu@email.com"></div>
+        <div class="form-group"><label>País</label>
+          <select id="reg-country">
+            <option value="">Seleccionar país</option>
+            <option>Argentina</option><option>México</option><option>Colombia</option>
+            <option>España</option><option>Brasil</option><option>Chile</option>
+            <option>Uruguay</option><option>Perú</option><option>Ecuador</option>
+            <option>Venezuela</option><option>Paraguay</option><option>Bolivia</option>
+            <option>Estados Unidos</option><option>Otro</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Rol en el fútbol</label>
+          <select id="reg-role">
+            <option value="">Seleccionar rol</option>
+            <option>Jugador profesional</option>
+            <option>Jugador amateur / semiprofesional</option>
+            <option>Entrenador / DT</option>
+            <option>Preparador físico</option>
+            <option>Representante / Agente</option>
+            <option>Periodista / Comentarista</option>
+            <option>Dirigente / Manager</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Nivel de inglés actual</label>
+          <select id="reg-level">
+            <option value="">Seleccionar nivel</option>
+            <option>Cero — nunca estudié</option>
+            <option>Básico — entiendo algo</option>
+            <option>Intermedio — me defiendo</option>
+            <option>Avanzado — hablo con fluidez</option>
+          </select>
+        </div>
+        <div class="form-group"><label>¿Qué querés mejorar? (opcional)</label>
+          <textarea id="reg-goal" placeholder="Ej: dar entrevistas, entender al DT extranjero, leer mi contrato..."></textarea>
+        </div>
+        <button class="form-submit" onclick="submitForm()">Crear mi perfil gratis ⚡</button>
+        <div class="success-msg" id="successMsg">
+          <h3>¡Bienvenido al equipo! ⚽</h3>
+          <p>Te registramos. En breve vas a recibir novedades de Onside English en tu email.</p>
+        </div>
+      </div>
+      <div class="register-perks">
+        <div class="perk"><div class="perk-icon">🎙</div><div class="perk-text"><h4>Episodios gratis</h4><p>Accedé a episodios de vestuario, entrevistas y más, sin pagar.</p></div></div>
+        <div class="perk"><div class="perk-icon">📚</div><div class="perk-text"><h4>Diccionario completo</h4><p>120+ términos del fútbol en inglés con traducción y ejemplos reales.</p></div></div>
+        <div class="perk"><div class="perk-icon">📊</div><div class="perk-text"><h4>Tu perfil guardado</h4><p>Registramos tu nivel y seguimos tu avance desde el primer día.</p></div></div>
+        <div class="perk"><div class="perk-icon">⚡</div><div class="perk-text"><h4>Contenido nuevo cada semana</h4><p>Episodios basados en situaciones reales del fútbol actual.</p></div></div>
+        <div class="perk"><div class="perk-icon">🔒</div><div class="perk-text"><h4>Sin spam</h4><p>Solo te contactamos con contenido relevante para vos.</p></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACTO -->
+<div id="contacto" class="section">
+  <div class="section-wrap">
+    <div class="section-header">
+      <h2>Hablar <span>con Nosotros</span></h2>
+      <p>¿Querés clases individuales, una propuesta para tu club o simplemente escribirnos?</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div><h4>Email</h4><p><a href="mailto:englishonside@gmail.com">englishonside@gmail.com</a></p></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">💬</div>
+          <div><h4>WhatsApp</h4><p><a href="https://wa.me/5491172381410" target="_blank">+54 9 11 7238 1410</a></p></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📸</div>
+          <div><h4>Instagram</h4>
+            <p><a href="https://instagram.com/onsideenglisfootball" target="_blank">@onsideenglisfootball</a></p>
+            <p><a href="https://instagram.com/onside.english.ac" target="_blank">@onside.english.ac</a></p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🤝</div>
+          <div><h4>Clases individuales</h4><p>Para jugadores que quieran avanzar más rápido con un profe en vivo. Consultanos disponibilidad.</p></div>
+        </div>
+      </div>
+      <div class="register-form">
+        <div class="form-group"><label>Tu nombre</label><input type="text" placeholder="Nombre"></div>
+        <div class="form-group"><label>Email</label><input type="email" placeholder="tu@email.com"></div>
+        <div class="form-group"><label>Motivo</label>
+          <select>
+            <option>Clases individuales</option>
+            <option>Propuesta para club o institución</option>
+            <option>Colaboración / Prensa</option>
+            <option>Consulta sobre planes</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Mensaje</label><textarea placeholder="Escribinos..."></textarea></div>
+        <button class="form-submit" onclick="sendContactWhatsApp()">Enviar por WhatsApp ⚡</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── NAV ──
+function showSection(id, el, isMobile) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (!isMobile) {
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    if (el) el.classList.add('active');
+  }
+  document.querySelectorAll('.mob-btn').forEach(b => b.classList.remove('active'));
+  if (isMobile && el) el.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ── PAYMENT MODAL ──
+let selectedMethod = '';
+function openModal() {
+  document.getElementById('payModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('payModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModalOutside(e) { if (e.target.id === 'payModal') closeModal(); }
+
+function selectMethod(el, method) {
+  document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedMethod = method;
+  const btn = document.getElementById('waBtn');
+  btn.disabled = false;
+  btn.innerHTML = `<svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> Confirmar por WhatsApp`;
+}
+
+function sendWhatsApp() {
+  if (!selectedMethod) return;
+  const msg = encodeURIComponent(`¡Hola! Quiero realizar el pago para el Plan Premium ($15 USD/mes). Método de pago elegido: ${selectedMethod}. ¿Me indicás los datos para proceder? ¡Gracias! 🟢⚽`);
+  window.open(`https://wa.me/5491172381410?text=${msg}`, '_blank');
+  closeModal();
+}
+
+function sendContactWhatsApp() {
+  const msg = encodeURIComponent('¡Hola! Me comunico desde la web de Onside English. Quiero consultar sobre sus servicios.');
+  window.open(`https://wa.me/5491172381410?text=${msg}`, '_blank');
+}
+
+// ── EPISODES ──
+const episodes = [
+  {num:'01',title:'How to Talk to Your Foreign Teammate',situation:'vestuario',free:true,duration:'8 min',desc:'Frases básicas para comunicarte en el vestuario con compañeros extranjeros.',yt:''},
+  {num:'02',title:'Warm-Up & Training Instructions',situation:'campo',free:true,duration:'10 min',desc:'Vocabulario esencial para el entrenamiento: instrucciones del DT, posiciones, ejercicios.',yt:''},
+  {num:'03',title:'Your First Media Interview in English',situation:'entrevistas',free:true,duration:'12 min',desc:'Cómo responder preguntas de periodistas en inglés sin nervios y con confianza.',yt:''},
+  {num:'04',title:'Reading Your Contract — Key Terms',situation:'contratos',free:false,duration:'15 min',desc:'Los términos más importantes de un contrato de fútbol profesional en inglés.',yt:''},
+  {num:'05',title:'Posting on Social Media in English',situation:'redes',free:false,duration:'7 min',desc:'Frases y vocabulario para tus redes sociales: posts, stories, captions.',yt:''},
+  {num:'06',title:'At the Airport & Hotel Abroad',situation:'viajes',free:true,duration:'9 min',desc:'Inglés de supervivencia para viajes: aeropuerto, hotel, transporte.',yt:''},
+  {num:'07',title:'Talking to the Coach After a Match',situation:'vestuario',free:false,duration:'11 min',desc:'Cómo hablar con tu entrenador después del partido: análisis, errores, mejoras.',yt:''},
+  {num:'08',title:'Negotiating Transfer & Salary Terms',situation:'contratos',free:false,duration:'18 min',desc:'Vocabulario avanzado para negociaciones de transferencia con representante y club.',yt:''},
+  {num:'09',title:'Press Conference Masterclass',situation:'entrevistas',free:false,duration:'20 min',desc:'Cómo manejar una conferencia de prensa en inglés como un profesional.',yt:''},
+  {num:'10',title:'Trash Talk & Banter on the Pitch',situation:'campo',free:false,duration:'8 min',desc:'El inglés informal del campo: lo que se habla entre jugadores durante el partido.',yt:''},
+  {num:'11',title:'Injury & Medical Vocabulary',situation:'vestuario',free:false,duration:'13 min',desc:'Cómo comunicarte con el médico o fisio del equipo cuando estás lesionado.',yt:''},
+  {num:'12',title:'Building Your Brand on Social Media',situation:'redes',free:false,duration:'14 min',desc:'Estrategia de contenido en inglés para futbolistas que quieren crecer online.',yt:''},
+];
+
+let activeCategory = 'todos';
+function filterEpisodes(cat, el) {
+  activeCategory = cat;
+  document.querySelectorAll('#sitTabs .sit-tab').forEach(t => t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderEpisodes();
+}
+function renderEpisodes() {
+  const filtered = activeCategory === 'todos' ? episodes : episodes.filter(e => e.situation === activeCategory);
+  document.getElementById('episodesGrid').innerHTML = filtered.map(ep => `
+    <div class="episode-card">
+      <div class="ep-num">${ep.num}</div>
+      <div class="ep-info">
+        <div class="ep-title">${ep.title}</div>
+        <div class="ep-meta">
+          <span>${ep.duration}</span>
+          <span class="ep-badge ${ep.free?'free':'premium'}">${ep.free?'Gratis':'Premium'}</span>
+        </div>
+        <div style="font-size:12px;color:#666;margin-top:4px;">${ep.desc}</div>
+      </div>
+      ${ep.free && ep.yt
+        ? `<a class="ep-play" href="${ep.yt}" target="_blank"><svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a>`
+        : ep.free
+          ? `<div class="ep-play"><svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>`
+          : `<div class="ep-play" onclick="openModal()" title="Requiere Premium"><svg width="16" height="16" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>`
+      }
+    </div>
+  `).join('');
+}
+
+// ── DICTIONARY ──
+const DICT = [
+  {en:"Acres of space",es:"Espacio libre / Zona despejada",def:"Cuando un jugador tiene muchísimo espacio a su alrededor sin ningún rival cercano.",ex:"\"Ronaldo had acres of space on the left flank and nobody closed him down.\"",exEs:"Ronaldo tenía espacio enorme en la banda y nadie lo presionó.",tag:"Juego en campo",var:"BR",l:"A"},
+  {en:"Against the run of play",es:"En contra del dominio",def:"Gol que ocurre cuando el equipo que lo consigue no estaba dominando.",ex:"\"United scored against the run of play — City had been better all half.\"",exEs:"United marcó en contra del dominio: City había sido mejor toda la etapa.",tag:"Narrativa",var:"BR",l:"A"},
+  {en:"Assist",es:"Asistencia / Pase gol",def:"El último pase que lleva directamente al gol.",ex:"\"De Bruyne finished the season with 18 assists, a Premier League record.\"",exEs:"De Bruyne terminó con 18 asistencias, un récord de la Premier League.",tag:"Estadística",var:"BOTH",l:"A"},
+  {en:"A brace",es:"Doblete",def:"Cuando un jugador marca dos goles en el mismo partido.",ex:"\"Kane scored a brace to put Spurs 2-0 up at half time.\"",exEs:"Kane anotó un doblete para poner al Spurs 2-0 arriba en el descanso.",tag:"Estadística",var:"BR",l:"B"},
+  {en:"Back four",es:"Línea de cuatro defensores",def:"La línea defensiva con dos laterales y dos centrales.",ex:"\"Their back four was exposed by the speed of the counter-attack.\"",exEs:"Su línea defensiva quedó expuesta ante la velocidad del contraataque.",tag:"Táctica",var:"BR",l:"B"},
+  {en:"Between the sticks",es:"Bajo los palos / En el arco",def:"Expresión informal para referirse al portero o su posición.",ex:"\"He's been outstanding between the sticks, keeping 15 clean sheets.\"",exEs:"Ha sido sobresaliente bajo los palos con 15 vallas invictas.",tag:"Portero",var:"BR",l:"B"},
+  {en:"Bicycle kick",es:"Chilena / Tijera",def:"Remate acrobático donde el jugador patea por encima de su cabeza estando en el aire.",ex:"\"Rooney scored a stunning bicycle kick from 18 yards out.\"",exEs:"Rooney marcó una increíble chilena desde 18 metros.",tag:"Técnica",var:"BOTH",l:"B"},
+  {en:"Bogey team",es:"Bestia negra",def:"Rival al que históricamente no se le puede ganar.",ex:"\"Liverpool have always been our bogey team — we haven't beaten them in six years.\"",exEs:"Liverpool siempre fue nuestra bestia negra: no les ganamos en seis años.",tag:"Rivalidad",var:"BR",l:"B"},
+  {en:"Box-to-box midfielder",es:"Mediocampista de área a área",def:"Centrocampista con gran capacidad física que trabaja en defensa y ataque.",ex:"\"He's a classic box-to-box midfielder — he covers every blade of grass.\"",exEs:"Es un volante de área a área clásico: cubre cada centímetro del campo.",tag:"Posiciones",var:"BOTH",l:"B"},
+  {en:"Break the deadlock",es:"Abrir el marcador / Romper el cero",def:"Marcar el primer gol en un partido que estaba 0-0.",ex:"\"Messi finally broke the deadlock in the 67th minute with a free-kick.\"",exEs:"Messi finalmente abrió el marcador en el minuto 67 con un tiro libre.",tag:"Ataque",var:"BR",l:"B"},
+  {en:"Captain",es:"Capitán",def:"El líder del equipo en el campo, identificado con un brazalete.",ex:"\"As captain, he rallied his team after going 2-0 down at half time.\"",exEs:"Como capitán, levantó a su equipo tras ir perdiendo 2-0 en el descanso.",tag:"Equipo",var:"BOTH",l:"C"},
+  {en:"Clean sheet",es:"Valla invicta / Arco en cero",def:"Cuando un equipo no recibe ningún gol en un partido.",ex:"\"Alisson kept his 20th clean sheet of the season in Saturday's 1-0 win.\"",exEs:"Alisson mantuvo su valla invicta número 20 en el triunfo del sábado.",tag:"Portero",var:"BR",l:"C"},
+  {en:"Clinical",es:"Clínico / Certero / Efectivo",def:"Describe a un jugador muy eficiente que no desperdicia las oportunidades.",ex:"\"They were absolutely clinical, scoring four from five shots.\"",exEs:"Fueron absolutamente certeros: marcaron cuatro de cinco remates.",tag:"Ataque",var:"BR",l:"C"},
+  {en:"Counter-attack",es:"Contraataque",def:"Ataque rápido lanzado tras recuperar el balón, aprovechando la desorganización rival.",ex:"\"They were dangerous on the counter-attack with two strikers behind the ball.\"",exEs:"Eran peligrosos en el contraataque con dos delanteros esperando.",tag:"Táctica",var:"BOTH",l:"C"},
+  {en:"Cross",es:"Centro / Cruce",def:"Pase largo desde las bandas hacia el área buscando a un compañero.",ex:"\"Trent whipped in a dangerous cross that the goalkeeper could only palm away.\"",exEs:"Trent metió un centro peligroso que el portero solo pudo desviar.",tag:"Juego en campo",var:"BOTH",l:"C"},
+  {en:"Derby",es:"Clásico / Derby",def:"Partido entre dos equipos rivales de la misma ciudad o región.",ex:"\"The Merseyside derby between Liverpool and Everton is one of the most intense.\"",exEs:"El clásico de Merseyside es uno de los más intensos de Inglaterra.",tag:"Rivalidad",var:"BOTH",l:"D"},
+  {en:"Dribble",es:"Driblar / Regatear / Encarar",def:"Avanzar con el balón controlado esquivando rivales mediante fintas.",ex:"\"He dribbled past three defenders before slotting the ball into the net.\"",exEs:"Regateó a tres defensores antes de colocar el balón tranquilamente.",tag:"Técnica",var:"BOTH",l:"D"},
+  {en:"Draw",es:"Empate",def:"Resultado en que ambos equipos terminan con el mismo número de goles.",ex:"\"It finished in a 1-1 draw, a fair result given how evenly matched they were.\"",exEs:"Terminó en empate 1-1, resultado justo dado lo parejo del partido.",tag:"Resultados",var:"BOTH",l:"D"},
+  {en:"Early bath",es:"Expulsión / Ducha temprana",def:"Expresión informal para la expulsión. El jugador se va al vestuario antes de tiempo.",ex:"\"The home captain got an early bath after a reckless challenge on 20 minutes.\"",exEs:"El capitán local fue expulsado tras una entrada temeraria al minuto 20.",tag:"Disciplina",var:"BR",l:"E"},
+  {en:"Equalizer",es:"Gol del empate / Tanto igualador",def:"El gol que iguala el marcador.",ex:"\"Sterling grabbed the equalizer in injury time to salvage a point.\"",exEs:"Sterling marcó el tanto igualador en el descuento para rescatar un punto.",tag:"Ataque",var:"BOTH",l:"E"},
+  {en:"Expected goals (xG)",es:"Goles esperados",def:"Métrica que mide la probabilidad de que un remate termine en gol.",ex:"\"Despite their 3-0 win, their xG was only 1.2 — they were very clinical.\"",exEs:"A pesar de ganar 3-0, su xG fue solo 1.2: fueron muy eficaces.",tag:"Estadística",var:"BOTH",l:"E"},
+  {en:"False nine",es:"Falso nueve",def:"Delantero que retrocede al mediocampo para generar juego en lugar de ocupar el '9' clásico.",ex:"\"Messi played as a false nine under Pep Guardiola, dropping deep to collect the ball.\"",exEs:"Messi jugó como falso nueve con Guardiola, retrocediendo para recibir el balón.",tag:"Táctica",var:"BOTH",l:"F"},
+  {en:"Football",es:"Fútbol (término brit.)",def:"El término universal. En EE.UU. se usa 'soccer' para diferenciarlo del fútbol americano.",ex:"\"Football is coming home — England fans are dreaming of World Cup glory.\"",exEs:"El fútbol está volviendo a casa: los hinchas ingleses sueñan con el Mundial.",tag:"Cultura",var:"BR",l:"F"},
+  {en:"Formation",es:"Formación / Sistema táctico",def:"Disposición táctica de los jugadores expresada en números: 4-3-3, 4-4-2, etc.",ex:"\"They switched from a 4-4-2 to a 3-5-2 at half time and changed the game.\"",exEs:"Cambiaron del 4-4-2 al 3-5-2 en el descanso y cambiaron el partido.",tag:"Táctica",var:"BOTH",l:"F"},
+  {en:"Free kick",es:"Tiro libre / Falta",def:"Remate otorgado tras una falta. Puede ser directo (al arco) o indirecto.",ex:"\"He curled a magnificent free kick over the wall and into the top corner.\"",exEs:"Curvó un magnífico tiro libre por encima de la barrera al ángulo superior.",tag:"Reglamento",var:"BOTH",l:"F"},
+  {en:"Full-back",es:"Lateral / Carrilero",def:"Defensor que juega en los costados de la línea defensiva.",ex:"\"The full-back bombed forward constantly and provided three assists.\"",exEs:"El lateral subió constantemente y dio tres asistencias.",tag:"Posiciones",var:"BOTH",l:"F"},
+  {en:"Gegenpressing",es:"Contrapresión / Presión inmediata",def:"Presionar al rival inmediatamente después de perder el balón antes de que se reorganice.",ex:"\"Their gegenpressing was relentless — they won the ball back within seconds.\"",exEs:"Su contrapresión fue implacable: recuperaban el balón en segundos.",tag:"Táctica",var:"BOTH",l:"G"},
+  {en:"Golden Boot",es:"Bota de Oro / Goleador del torneo",def:"Premio al máximo goleador de un torneo o temporada.",ex:"\"Mbappé won the Golden Boot at the World Cup with eight goals.\"",exEs:"Mbappé ganó la Bota de Oro en el Mundial con ocho goles.",tag:"Premios",var:"BOTH",l:"G"},
+  {en:"Hat-trick",es:"Hat-trick / Triplete",def:"Cuando un jugador marca tres goles en el mismo partido.",ex:"\"Lewandowski completed his hat-trick in the 88th minute to seal the comeback.\"",exEs:"Lewandowski completó su triplete en el minuto 88 para confirmar la remontada.",tag:"Estadística",var:"BOTH",l:"H"},
+  {en:"Header",es:"Cabezazo / Remate de cabeza",def:"Golpe al balón con la cabeza para rematar, despejar o pasar.",ex:"\"He met the cross with a powerful header that left the keeper with no chance.\"",exEs:"Conectó el centro con un potente cabezazo que no le dio opción al portero.",tag:"Técnica",var:"BOTH",l:"H"},
+  {en:"High press",es:"Presión alta",def:"Táctica donde el equipo sin balón presiona a los rivales en su propia zona defensiva.",ex:"\"Their high press suffocated the opposition and led to three goals from turnovers.\"",exEs:"Su presión alta asfixió al rival y generó tres goles tras recuperaciones.",tag:"Táctica",var:"BOTH",l:"H"},
+  {en:"Injury time",es:"Tiempo de descuento / Tiempo agregado",def:"Los minutos adicionales al final de cada tiempo para compensar interrupciones.",ex:"\"They equalised deep into injury time to prevent a heavy defeat.\"",exEs:"Igualaron profundamente en el descuento para evitar una derrota abultada.",tag:"Reglamento",var:"BR",l:"I"},
+  {en:"Man of the match",es:"Figura del partido / MVP",def:"Distinción al jugador con la mejor actuación individual en un partido.",ex:"\"Bellingham was an obvious man of the match after scoring twice.\"",exEs:"Bellingham fue la figura obvia del partido tras marcar dos goles.",tag:"Premios",var:"BOTH",l:"M"},
+  {en:"Nutmeg",es:"Caño / Túnel",def:"Pasar el balón entre las piernas de un rival. Uno de los gestos más humillantes.",ex:"\"He nutmegged the defender with an outrageous flick and raced clear.\"",exEs:"Le hizo un caño al defensor con un toque genial y se fue solo.",tag:"Técnica",var:"BR",l:"N"},
+  {en:"Offside",es:"Fuera de juego / Offside",def:"Posición ilegal donde un atacante está más adelantado que el penúltimo defensor al momento del pase.",ex:"\"The goal was ruled out for offside by the narrowest of margins.\"",exEs:"El gol fue anulado por offside por el margen más pequeño posible.",tag:"Reglamento",var:"BOTH",l:"O"},
+  {en:"Own goal",es:"Gol en contra / Autogol",def:"Cuando un jugador mete el balón en su propio arco.",ex:"\"An unfortunate own goal handed the visitors all three points.\"",exEs:"Un desafortunado autogol le entregó los tres puntos a los visitantes.",tag:"Estadística",var:"BOTH",l:"O"},
+  {en:"Penalty kick",es:"Penal / Penalti",def:"Tiro directo desde el punto penal (11 metros), otorgado por una falta dentro del área.",ex:"\"He stepped up coolly and converted the penalty to seal the 2-0 victory.\"",exEs:"Se acercó con calma y convirtió el penal para confirmar el 2-0.",tag:"Reglamento",var:"BOTH",l:"P"},
+  {en:"Playmaker",es:"Enganche / Creador de juego",def:"Jugador con visión y habilidad técnica para crear oportunidades para sus compañeros.",ex:"\"Their playmaker was the key — without him, they looked completely lost.\"",exEs:"Su enganche era la clave: sin él el equipo parecía completamente perdido.",tag:"Posiciones",var:"BOTH",l:"P"},
+  {en:"Pressing",es:"Presión / Pressing",def:"Acción colectiva de ir a buscar el balón al rival reduciendo tiempo y espacio.",ex:"\"Their pressing game was relentless — the opposition couldn't string two passes together.\"",exEs:"Su pressing fue implacable: el rival no podía conectar dos pases seguidos.",tag:"Táctica",var:"BOTH",l:"P"},
+  {en:"Red card",es:"Tarjeta roja / Expulsión",def:"Sanción máxima que obliga al jugador a abandonar el campo.",ex:"\"He received a straight red card for a dangerous two-footed lunge.\"",exEs:"Recibió la roja directa por una entrada peligrosa con los dos pies.",tag:"Disciplina",var:"BOTH",l:"R"},
+  {en:"Relegation",es:"Descenso",def:"El proceso por el que un equipo baja a una división inferior.",ex:"\"They were relegated on the final day after a devastating home defeat.\"",exEs:"Descendieron en la última jornada tras una devastadora derrota en casa.",tag:"Competencia",var:"BOTH",l:"R"},
+  {en:"Set piece",es:"Pelota parada / Jugada ensayada",def:"Jugadas desde balón parado: corners, tiros libres, penales.",ex:"\"They scored three set-piece goals this week — their training is paying off.\"",exEs:"Marcaron tres goles de pelota parada: su entrenamiento está dando frutos.",tag:"Táctica",var:"BOTH",l:"S"},
+  {en:"Soccer",es:"Fútbol (término amer.)",def:"Término usado en EE.UU., Canadá y Australia. En Reino Unido se dice 'football'.",ex:"\"Soccer is the fastest growing sport in the United States right now.\"",exEs:"El fútbol es el deporte de mayor crecimiento en EE.UU. actualmente.",tag:"Cultura",var:"US",l:"S"},
+  {en:"Striker",es:"Delantero / Centrodelantero / '9'",def:"El jugador más avanzado del equipo. Su función principal es marcar goles.",ex:"\"They need to sign a world-class striker if they want to challenge for the title.\"",exEs:"Necesitan fichar un delantero de clase mundial para pelear el título.",tag:"Posiciones",var:"BOTH",l:"S"},
+  {en:"Tackle",es:"Entrada / Barrida",def:"Acción de intentar quitarle el balón al rival mediante contacto físico.",ex:"\"His crunching tackle won back possession and sparked the move for the goal.\"",exEs:"Su contundente entrada recuperó la posesión e inició la jugada del gol.",tag:"Defensa",var:"BOTH",l:"T"},
+  {en:"Tiki-taka",es:"Tiqui-taca",def:"Sistema basado en pases cortos para mantener la posesión. Popularizado por el Barcelona.",ex:"\"Their tiki-taka style was suffocating — they kept 78% possession.\"",exEs:"Su tiqui-taca fue asfixiante: tuvieron el 78% de posesión.",tag:"Táctica",var:"BOTH",l:"T"},
+  {en:"Transfer window",es:"Mercado de pases",def:"El período oficial en que los clubes pueden comprar, vender y prestar jugadores.",ex:"\"They spent over 200 million in the summer transfer window to rebuild the squad.\"",exEs:"Gastaron más de 200 millones en el mercado para reconstruir el plantel.",tag:"Mercado",var:"BOTH",l:"T"},
+  {en:"VAR",es:"VAR (Árbitro de video)",def:"Sistema que revisa en video las decisiones del árbitro en situaciones clave.",ex:"\"The goal was disallowed by VAR for a handball in the build-up.\"",exEs:"El gol fue anulado por el VAR por una mano en la jugada previa.",tag:"Tecnología",var:"BOTH",l:"V"},
+  {en:"Wall",es:"Barrera",def:"Línea de jugadores defensores que bloquean un tiro libre.",ex:"\"He bent the free kick around the wall and into the bottom corner.\"",exEs:"Curvó el tiro libre alrededor de la barrera al ángulo inferior.",tag:"Defensa",var:"BOTH",l:"W"},
+  {en:"Winger",es:"Extremo / Alero",def:"Jugador que opera por las bandas con velocidad para desbordar y centrar.",ex:"\"The winger tormented the full-back all game with his pace and trickery.\"",exEs:"El extremo atormentó al lateral todo el partido con su velocidad.",tag:"Posiciones",var:"BOTH",l:"W"},
+  {en:"World class",es:"De clase mundial",def:"Expresión para un jugador o actuación de nivel excepcional, entre los mejores del mundo.",ex:"\"That save was absolutely world class — nobody else makes that stop.\"",exEs:"Esa atajada fue de clase mundial: nadie más hace esa parada.",tag:"Calidad",var:"BOTH",l:"W"},
+  {en:"Yellow card",es:"Tarjeta amarilla / Amonestación",def:"Primera advertencia formal del árbitro. Dos en el mismo partido = expulsión.",ex:"\"He was lucky to escape with just a yellow card for that tackle.\"",exEs:"Tuvo suerte de irse solo con amarilla por esa entrada.",tag:"Disciplina",var:"BOTH",l:"Y"},
+  {en:"Zonal marking",es:"Marcación en zona",def:"Sistema defensivo donde cada jugador defiende una zona del campo, no a un rival específico.",ex:"\"They defend corners with zonal marking, which left them vulnerable at the near post.\"",exEs:"Defienden con marca zonal, lo que los dejó vulnerables en el primer palo.",tag:"Táctica",var:"BOTH",l:"Z"},
+];
+
+let dictLetter='ALL', dictVar='ALL', dictSearch='';
+function buildAlpha(){
+  const letters=[...new Set(DICT.map(d=>d.l))].sort();
+  const wrap=document.getElementById('alphaWrap');
+  letters.forEach(l=>{const b=document.createElement('button');b.className='alpha-btn';b.textContent=l;b.onclick=()=>setLetter(l,b);wrap.appendChild(b);});
+}
+function setLetter(l,el){dictLetter=l;document.querySelectorAll('.alpha-btn').forEach(b=>b.classList.remove('active'));if(el)el.classList.add('active');renderDict();}
+function setVar(v,el){dictVar=v;document.querySelectorAll('#diccionario .sit-tab').forEach(b=>b.classList.remove('active'));if(el)el.classList.add('active');renderDict();}
+function renderDict(){
+  let items=DICT;
+  if(dictLetter!=='ALL')items=items.filter(d=>d.l===dictLetter);
+  if(dictVar==='BR')items=items.filter(d=>d.var==='BR'||d.var==='BOTH');
+  if(dictVar==='US')items=items.filter(d=>d.var==='US'||d.var==='BOTH');
+  if(dictSearch){const q=dictSearch.toLowerCase();items=items.filter(d=>d.en.toLowerCase().includes(q)||d.es.toLowerCase().includes(q)||d.def.toLowerCase().includes(q));}
+  document.getElementById('dictStats').innerHTML=`Mostrando <span>${items.length}</span> de <span>${DICT.length}</span> términos`;
+  const noR=document.getElementById('noResults');
+  if(!items.length){document.getElementById('dictContainer').innerHTML='';noR.style.display='block';return;}
+  noR.style.display='none';
+  const grouped={};items.forEach(d=>{if(!grouped[d.l])grouped[d.l]=[];grouped[d.l].push(d);});
+  const vl={BR:'🇬🇧 Brit',US:'🇺🇸 US',BOTH:'🌐'};
+  document.getElementById('dictContainer').innerHTML=Object.keys(grouped).sort().map(l=>`
+    <div class="letter-group">
+      <div class="letter-label">${l}</div>
+      <div class="dict-grid">
+        ${grouped[l].map(d=>`
+          <div class="dict-card">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:2px;">
+              <div class="dict-en">${d.en}</div>
+              <span class="var-pill ${d.var}">${vl[d.var]}</span>
+            </div>
+            <div class="dict-es">${d.es}</div>
+            <div class="dict-def">${d.def}</div>
+            <div class="dict-example"><span>Ejemplo</span>${d.ex}<br><em style="color:#4ADE4A;font-style:normal;font-size:11px;">→ ${d.exEs}</em></div>
+            <div class="dict-bottom"><span class="dict-tag">${d.tag}</span></div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+document.getElementById('dictSearch').addEventListener('input',function(){dictSearch=this.value.trim();renderDict();});
+
+// FORM
+function submitForm(){
+  const name=document.getElementById('reg-name').value;
+  const email=document.getElementById('reg-email').value;
+  if(!name||!email){alert('Por favor completá nombre y email.');return;}
+  document.getElementById('successMsg').style.display='block';
+  document.querySelector('.form-submit').style.display='none';
+}
+
+// INIT
+buildAlpha();
+renderEpisodes();
+renderDict();
+</script>
+</body>
+</html>
